@@ -1,0 +1,37 @@
+---
+spring:
+  profiles: default
+
+---
+spring:
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:sampletest;MODE=MySQL
+
+---
+spring:
+  profiles: test
+
+spring.jpa:
+  hibernate:
+    ddl-auto: create-drop
+
+---
+spring:
+  profiles: local
+
+eureka:
+  client:
+    service-url:
+     defaultZone: http://135026-eureka:8761/eureka/
+
+zuul:
+  ignoredServices: '*'
+  routes:
+    my-app1: /my-app1/**
+    my-app2: /my-app2/**
+    my-gateway: /135026-gateway/**
+
+management:
+  security:
+    enabled: false
