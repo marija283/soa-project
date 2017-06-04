@@ -48,23 +48,23 @@ services:
     labels:
       - "traefik.enable=false"
 
-#   135026-login:
-#     image: 135026_dockerhub_user/task7-login
-#     labels:
-#       - "traefik.port=8080"
-#       - "traefik.backend=135026-login"
-#       - "traefik.frontend.rule=PathPrefixStrip:/135026-login"
-#     links:
-#       - 135026-mysql
-#       - 135026-eureka
-#  #     - my-zuul
-#  #     - my-gateway
-#     depends_on:
-#       - 135026-mysql
-#       - 135026-traefik
-#       - 135026-eureka
-# #      - my-zuul
-# #      - my-gateway
+  135026-login:
+    image: 135026_dockerhub_user/task7-login
+    labels:
+      - "traefik.port=8080"
+      - "traefik.backend=135026-login"
+      - "traefik.frontend.rule=PathPrefixStrip:/135026-login"
+    links:
+      - 135026-mysql
+      - 135026-eureka
+ #     - my-zuul
+ #     - my-gateway
+    depends_on:
+      - 135026-mysql
+      - 135026-traefik
+      - 135026-eureka
+#      - my-zuul
+#      - my-gateway
 
   my-app1:
     image: 135026_dockerhub_user/task6-users
@@ -101,6 +101,24 @@ services:
       - 135026-eureka
       - 135026-zuul
       - 135026-gateway
+
+  rating:
+    image: 135026_dockerhub_user/rating
+    labels:
+      - "traefik.port=8080"
+      - "traefik.backend=rating"
+      - "traefik.frontend.rule=PathPrefixStrip:/rating"
+    links:
+      - 135026-mysql
+      - 135026-eureka
+ #     - my-zuul
+ #     - my-gateway
+    depends_on:
+      - 135026-mysql
+      - 135026-traefik
+      - 135026-eureka
+#      - my-zuul
+#      - my-gateway
 
 volumes:
   135026-datavolume: {}
