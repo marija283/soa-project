@@ -1,6 +1,7 @@
 package teatar.Entities;
 
 import javax.persistence.*;
+import java.util.*;
 
 /**
  * Created by 135026 on 3/7/2017.
@@ -17,15 +18,23 @@ public class Play {
 
     private String description;
 
-    @ManyToOne
-    private Theater theater;
+    private Date fromDate;
+
+    private Date toDate;
+
+    @ManyToMany(fetch=FetchType.EAGER)
+    @JoinTable(name="Play_author",
+            joinColumns=@JoinColumn(name="Play_id"),
+            inverseJoinColumns=@JoinColumn(name="Author_id"))
+    private List<Actor> actors;
+
 
     Play(){}
 
-    public Play(String name, String description, Theater theater) {
+    public Play(String name, String description) {
         this.name = name;
         this.description = description;
-        this.theater = theater;
+        this.actors = new ArrayList<>();
     }
 
     public Long getId() {
@@ -40,7 +49,33 @@ public class Play {
         return description;
     }
 
-    public Theater getTheater() {
-        return theater;
+    public Date getFromDate() {
+        return fromDate;
     }
+
+    public void setFromDate(Date fromDate) {
+        this.fromDate = fromDate;
+    }
+
+    public Date getToDate() {
+        return toDate;
+    }
+
+    public void setToDate(Date toDate) {
+        this.toDate = toDate;
+    }
+
+    public void setActors(List<Actor> actors){
+        actors = actors;
+    }
+
+    public List<Actor> getActors(){
+        return  actors;
+    }
+
+    public void addActor(Actor actor){
+        actors.add(actor);
+    }
+
+
 }

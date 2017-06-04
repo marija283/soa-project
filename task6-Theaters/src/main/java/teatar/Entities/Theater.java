@@ -1,6 +1,7 @@
 package teatar.Entities;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ public class Theater {
     private String name;
 
     @OneToMany
-    private List<Play> plays;
+    private Collection<Play> plays;
 
     Theater(){}
 
@@ -31,5 +32,17 @@ public class Theater {
 
     public String getName() {
         return name;
+    }
+
+    public Collection<Play> getPlays() {
+        return plays;
+    }
+
+    public void setPlays(List<Play> plays) {
+        this.plays = plays;
+    }
+
+    public void setPlays(Play play){
+        plays.add(play);
     }
 }

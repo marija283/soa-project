@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/task6.iml" filepath="$PROJECT_DIR$/.idea/task6.iml" />
+      <module fileurl="file://$PROJECT_DIR$/task6-eureka/src/main/main.iml" filepath="$PROJECT_DIR$/task6-eureka/src/main/main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/task6-gateway/src/main/main1.iml" filepath="$PROJECT_DIR$/task6-gateway/src/main/main1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/task6-Theaters/src/main/main2.iml" filepath="$PROJECT_DIR$/task6-Theaters/src/main/main2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/task6-users/src/main/main3.iml" filepath="$PROJECT_DIR$/task6-users/src/main/main3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/task6-zuul/src/main/main4.iml" filepath="$PROJECT_DIR$/task6-zuul/src/main/main4.iml" />
     </modules>
   </component>
 </project>
