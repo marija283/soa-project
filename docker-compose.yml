@@ -66,12 +66,12 @@ services:
 #      - my-zuul
 #      - my-gateway
 
-  my-app1:
+  users:
     image: 135026_dockerhub_user/task6-users
     labels:
       - "traefik.port=8080"
-      - "traefik.backend=my-app1"
-      - "traefik.frontend.rule=PathPrefixStrip:/my-app1"
+      - "traefik.backend=users"
+      - "traefik.frontend.rule=PathPrefixStrip:/users"
     links:
       - 135026-mysql
       - 135026-eureka
@@ -84,12 +84,12 @@ services:
       - 135026-zuul
       - 135026-gateway
 
-  my-app2:
+  theaters:
     image: 135026_dockerhub_user/task6-theaters
     labels:
       - "traefik.port=8080"
-      - "traefik.backend=my-app2"
-      - "traefik.frontend.rule=PathPrefixStrip:/my-app2"
+      - "traefik.backend=theaters"
+      - "traefik.frontend.rule=PathPrefixStrip:/theaters"
     links:
       - 135026-mysql
       - 135026-eureka

@@ -5,13 +5,16 @@ import org.hibernate.annotations.*;
 import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import java.io.Serializable;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
  * Created by Marija on 6/2/2017.
  */
 @Entity
-public class Stars<T, S> {
+public class Stars {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
@@ -25,6 +28,14 @@ public class Stars<T, S> {
 
     private int stars;
 
+    public Stars(){}
+
+    public Stars(Long ratedItemId, Long userId, int stars) {
+        this.ratedItemId = ratedItemId;
+        this.userId = userId;
+        this.dateCreated = new Date();
+        this.stars = stars;
+    }
 
     public Long getId() {
         return id;
@@ -32,16 +43,6 @@ public class Stars<T, S> {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-
-
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
     }
 
     public int getStars() {
@@ -67,4 +68,6 @@ public class Stars<T, S> {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+
+
 }
