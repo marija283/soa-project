@@ -25,5 +25,14 @@ curl http://localhost/my-zuul/my-gateway/greeting
 Test the API gateway:
 curl http://localhost/my-gateway/greeting
 
+Scale application with 3 instances:
+docker-compose scale my-app=3
+
+Check Traefik web-panel:
+http://135026-app.dck.mojserver.mk:8080
+
+Downscale application with 1 instance:
+docker-compose scale my-app=1
+
 Shutdown containers:
 docker-compose down
