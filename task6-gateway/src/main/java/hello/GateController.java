@@ -1,6 +1,8 @@
 package hello;
 
 //import com.netflix.discovery.DiscoveryClient;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.netflix.discovery.EurekaClient;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.cloud.client.ServiceInstance;
 //import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -23,11 +25,6 @@ import java.util.List;
 @RestController
 public class GateController {
 
-    @Bean
-    RestTemplate restTemplate(){
-        return new RestTemplate();
-    }
-
     @Autowired
     RestTemplate restTemplate;
 
@@ -48,21 +45,22 @@ public class GateController {
     @RequestMapping("/greeting")
     public String greeting() {
         Random rnd = new Random();
-
-        //my-app1
-        List<ServiceInstance> services1 = discoveryClient.getInstances("users");
-        EurekaDiscoveryClient.EurekaServiceInstance service1 = (EurekaDiscoveryClient.EurekaServiceInstance) services1.get(rnd.nextInt(services1.size()));
-        String ip1 = service1.getInstanceInfo().getIPAddr();
-        String greeting1 = this.restTemplate.getForObject("http://"+ip1+":8080/greeting", String.class);
+//
+//        //my-app1
+//        List<ServiceInstance> services1 = discoveryClient.getInstances("users");
+//        EurekaDiscoveryClient.EurekaServiceInstance service1 = (EurekaDiscoveryClient.EurekaServiceInstance) services1.get(rnd.nextInt(services1.size()));
+//        String ip1 = service1.getInstanceInfo().getIPAddr();
+//        String greeting1 = this.restTemplate.getForObject("http://"+ip1+":8080/greeting", String.class);
 
         //my-app2
-        List<ServiceInstance> services2 = discoveryClient.getInstances("theaters");
-        EurekaDiscoveryClient.EurekaServiceInstance service2 = (EurekaDiscoveryClient.EurekaServiceInstance) services2.get(rnd.nextInt(services2.size()));
-        String ip2 = service2.getInstanceInfo().getIPAddr();
-        String greeting2 = this.restTemplate.getForObject("http://"+ip2+":8080/theater/greeting", String.class);
+//        List<ServiceInstance> services2 = discoveryClient.getInstances("theaters");
+//        EurekaDiscoveryClient.EurekaServiceInstance service2 = (EurekaDiscoveryClient.EurekaServiceInstance) services2.get(rnd.nextInt(services2.size()));
+//        String ip2 = service2.getInstanceInfo().getIPAddr();
+       // JSONPObject greeting2 = this.restTemplate.getForObject("http://"+ip2+":8080/theater/greeting", JSONPObject.class);
+        String greeting2 = this.restTemplate.postForObject("https://gurujsonrpc.appspot.com/guru",null, String.class);
 
 
-        return String.format("Got my-app1 answer: %s from ip %s, and my-app2 answer: %s from ip %s", greeting1, ip1, greeting2, ip2);
+        return String.format("Got  my-app2 answer: %s", greeting2.toString());
     }
 
 

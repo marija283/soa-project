@@ -28,9 +28,13 @@ eureka:
 zuul:
   ignoredServices: '*'
   routes:
-    my-app1: /my-app1/**
-    my-app2: /my-app2/**
+    users: /users/**
+    theaters: /theaters/**
+    rating: /rating/**
     my-gateway: /135026-gateway/**
+    my-login: 
+      path: /135026-login/**
+      sensitive-headers:
 
 management:
   security:

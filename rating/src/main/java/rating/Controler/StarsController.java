@@ -50,4 +50,5 @@ public class StarsController {
         return starsService.getTotalUserRatings(item);
     }
 
+
 }
