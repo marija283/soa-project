@@ -32,9 +32,6 @@ public class TheaterContorller {
     RestTemplate restTemplate;
 
     @Autowired
-    private DiscoveryClient discoveryClient;
-
-    @Autowired
     private EurekaClient eurekaClient;
 
 
@@ -46,26 +43,28 @@ public class TheaterContorller {
 
 
     @RequestMapping("/get")
-    public String service(){
+    public String getTheaters(){
         InstanceInfo instance = eurekaClient.getNextServerFromEureka("theaters", false);
-        return instance.getIPAddr();
+        String ip = instance.getIPAddr();
+        String getAll = this.restTemplate.getForObject("http://"+ip+":8080/theater/getall", String.class);
+        return getAll;
     }
 
     @RequestMapping("/get/{id}")
-    public List<String> getTheater(@PathVariable Long id){
-        Random rnd = new Random();
-        List<ServiceInstance> services2 = discoveryClient.getInstances("theaters");
-        EurekaDiscoveryClient.EurekaServiceInstance service2 = (EurekaDiscoveryClient.EurekaServiceInstance) services2.get(rnd.nextInt(services2.size()));
-        String ip2 = service2.getInstanceInfo().getIPAddr();
-        String greeting2 = this.restTemplate.getForObject("http://"+ip2+":8080/theater/getbyid?id=" + id, String.class);
-
+    public String getTheater(@PathVariable Long id){
         InstanceInfo instance = eurekaClient.getNextServerFromEureka("theaters", false);
-        String url = instance.getHomePageUrl();
+        String ip = instance.getIPAddr();
+        String getById = this.restTemplate.getForObject("http://"+ip+":8080/theater/getbyid?id=" + id, String.class);
 
-        ArrayList<String> response = new ArrayList<>();
-        response.add(greeting2);
-        response.add(url);
+        return getById;
+    }
 
-        return response;
+
+    @RequestMapping("/getplays/{id}")
+    public String getPlays(@PathVariable Long id){
+        InstanceInfo instance = eurekaClient.getNextServerFromEureka("theaters", false);
+        String ip = instance.getIPAddr();
+        String getAll = this.restTemplate.getForObject("http://"+ip+":8080/theater/getplays?id=" +id, String.class);
+        return getAll;
     }
 }
