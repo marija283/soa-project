@@ -7,7 +7,7 @@ services:
       - "traefik.enable=false"
     ports:
       - "17000:80"
-      - "8080:8080"
+      - "17080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
@@ -20,7 +20,7 @@ services:
     expose:
       - "8761"
     ports:
-      - "8761:8761"
+      - "17761:8761"
 
   135026-zuul:
     image: 135026_dockerhub_user/task6-zuul
