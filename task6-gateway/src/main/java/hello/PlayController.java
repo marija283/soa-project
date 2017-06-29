@@ -4,10 +4,7 @@ import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -27,7 +24,7 @@ public class PlayController
     private EurekaClient eurekaClient;
 
     @RequestMapping("/{id}")
-    public List<String> getById(@PathVariable Long id) {
+    public String getById(@PathVariable Long id) {
         InstanceInfo instance = eurekaClient.getNextServerFromEureka("theaters", false);
         String ip = instance.getIPAddr();
         String play = restTemplate.getForObject("http://"+ip+":8080/play/getbyid?id=" +id, String.class);
@@ -36,9 +33,17 @@ public class PlayController
         ip = instance.getIPAddr();
         String rating = restTemplate.getForObject("http://"+ip+":8080/rate/getbyitemid?id=" +id, String.class);
 
-        List<String> tmp = new ArrayList<>();
-        tmp.add(play);
-        tmp.add(rating);
-        return tmp;
+
+        return play + " ,{  \"stars\" : "+rating+"}";
+    }
+
+    @RequestMapping(value="/createnew", method = RequestMethod.POST)
+    public String CreateNew(@RequestParam String name, String desc, Long theaterId){
+        InstanceInfo instance = eurekaClient.getNextServerFromEureka("theaters", false);
+        String ip = instance.getIPAddr();
+      //  String play = restTemplate.postForObject("http://"+ip+":8080/play/createnew?name=" +name +"&desc=" +desc+ "&theaterId=" +theaterId);
+
+
+        return null;
     }
 }
