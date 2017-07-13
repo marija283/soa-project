@@ -2,13 +2,18 @@ package theatre.Controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import theatre.Entities.Users;
 import theatre.Repository.UserRepo;
+import theatre.Service.UserService;
 
+import javax.servlet.http.HttpSession;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -18,7 +23,10 @@ import java.util.concurrent.atomic.AtomicLong;
 public class UserController {
 
     @Autowired
-    UserRepo userRepo;
+    UserService userService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     private static final String template = "Hello, %s!";
     private final AtomicLong counter = new AtomicLong();
@@ -30,16 +38,50 @@ public class UserController {
 
 
     @RequestMapping(value= "/createNewUser", method = RequestMethod.POST)
-    public Users CreateNew(@RequestParam String username, @RequestParam String password){
-        Users user = new Users("test","stest",username, password);
-        userRepo.save(user);
-        return user;
+    public Users CreateNew(@RequestParam String username, @RequestParam String password) throws Exception {
+        Users u = userService.findUsersByUsername(username);
+        if( u != null)
+            throw new Exception("Username taken");
+        return userService.save(username, "name","stest", passwordEncoder.encode(password));
+    }
+
+
+    @RequestMapping(value= "/update", method = RequestMethod.POST)
+    public Users UpdateUser(@RequestParam String username, @RequestParam String password) throws Exception {
+        Users u = userService.findUsersByUsername(username);
+        if( u != null)
+            throw new Exception("No such user");
+        u.setName("name");
+        u.setName("surname");
+        u.setName(passwordEncoder.encode(password));
+        return userService.save(username, "name", "stest", password);
     }
 
     @RequestMapping("/getbyid")
     public Users getById(@RequestParam(value="id", defaultValue = "-1") Long id) {
-        Users foundCustomer = userRepo.findOne(id);
+        Users foundCustomer = userService.findOne(id);
         return foundCustomer;
+    }
+
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ResponseEntity<?> loginUser(
+            @RequestParam(required = false) String username,
+            @RequestParam(required = false) String password){
+
+        if(!username.trim().isEmpty() && !password.trim().isEmpty())
+        {
+            Users u = userService.login(username, password);
+            if(u != null)
+            {
+//                HttpSession session = request.getSession();
+//                session.setAttribute("user", user);
+//                System.out.println(session.getId());
+                return new ResponseEntity<Users>(u,HttpStatus.OK);
+            }
+
+        }
+        return new ResponseEntity<Object>(password, HttpStatus.OK);
     }
 
 

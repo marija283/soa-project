@@ -16,6 +16,8 @@ public class Users {
     private String surname;
     private String username;
     private String password;
+    @Column(length=10000)
+    private String biography;
 
 //    @OneToMany
 //    private List<Reservation> reservation;
@@ -53,10 +55,27 @@ public class Users {
         this.name = name;
     }
 
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
 
+    public String getPassword() {
+        return password;
+    }
 
+    public String getBiography() {
+        return biography;
+    }
 
+    public void setBiography(String biography) {
+        this.biography = biography;
+    }
 }
