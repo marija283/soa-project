@@ -1,6 +1,12 @@
-package hello.security;
+package hello.model;
 
-public class AccountCredentials {
+/**
+ * Created by Marija on 8/24/2017.
+ */
+
+
+
+public class ApplicationUser {
 
     private String username;
     private String password;
