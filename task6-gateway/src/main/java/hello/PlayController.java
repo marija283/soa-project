@@ -38,7 +38,7 @@ public class PlayController
     }
 
     @RequestMapping(value="/createnew", method = RequestMethod.POST)
-    public String CreateNew(@RequestParam String name, String desc, Long theaterId){
+    public String CreateNew( String name, String desc, Long theaterId){
         InstanceInfo instance = eurekaClient.getNextServerFromEureka("theaters", false);
         String ip = instance.getIPAddr();
         String play = restTemplate.postForObject("http://"+ip+":8080/play/createnew?name=" +name +"&desc=" +desc+ "&theaterId=" +theaterId, null, String.class);

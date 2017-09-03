@@ -63,7 +63,7 @@ public class GateController {
         return String.format("Got  my-app2 answer: %s", greeting2.toString());
     }
 
-    @RequestMapping("/greeting")
+    @RequestMapping("/greeting2")
     public String authGreeting() {
 
         return String.format("Got  my-app2 answer: %s", "auth");
